@@ -21,15 +21,28 @@ class ViewController: UIViewController {
         configure()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animateCollectionView()
+    }
+
     func configure() {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ControllerCollectionViewCell.nib(),
                                 forCellWithReuseIdentifier: ControllerCollectionViewCell.identifier)
     }
+    
+    func animateCollectionView() {
+        self.collectionView.transform = CGAffineTransform(translationX: view.frame.width, y: 0)
+        UIView.animate(withDuration: 1) {
+            self.collectionView.transform = CGAffineTransform(translationX: 0, y: 0)
+        }
+    }
 }
 
 extension ViewController: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         products.count
     }
@@ -41,8 +54,6 @@ extension ViewController: UICollectionViewDataSource {
         cell.configure(with: products[indexPath.row])
         return cell
     }
-    
-    
 }
 
 extension ViewController: UICollectionViewDelegate {
@@ -50,7 +61,9 @@ extension ViewController: UICollectionViewDelegate {
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let ratio: CGFloat = 231 / 291
         guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize(width: 0, height: 0) }
         let spacing = layout.sectionInset.left + layout.minimumInteritemSpacing
@@ -58,6 +71,9 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         let widthWithoutSpacing = collectionView.frame.width - spacing
         let cellWidth = widthWithoutSpacing / itemCountOnScreen
         let cellHeight = cellWidth / ratio
+        let collectionViewSize = CGSize(width: collectionView.frame.width, height: cellHeight)
+        let origin = CGPoint(x: 50, y: collectionView.frame.origin.y - 500.0)
+        self.collectionView.frame = CGRect(origin: origin, size: collectionViewSize)
         self.cellSize = CGSize(width: cellWidth, height: cellHeight)
         return self.cellSize
     }
@@ -81,5 +97,5 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         let point = CGPoint(x: pagedX, y: targetContentOffset.pointee.y)
         targetContentOffset.pointee = point
     
-}
+    }
 }
