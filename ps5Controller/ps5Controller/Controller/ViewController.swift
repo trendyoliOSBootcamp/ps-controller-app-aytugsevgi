@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    var cellSize: CGSize = CGSize(width: 0, height: 0)
     var products: [Product] = [.init(name: "Dual Sense", description: "Official PS5 controller", image: UIImage(named: "dualSenseBlack")),
                                .init(name: "Dual Sense", description: "Official PS5 controller", image: UIImage(named: "dualSenseWhite")),
                                .init(name: "Dual Sense", description: "Official PS5 controller", image: UIImage(named: "dualSenseBlack")),
@@ -58,22 +58,28 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         let widthWithoutSpacing = collectionView.frame.width - spacing
         let cellWidth = widthWithoutSpacing / itemCountOnScreen
         let cellHeight = cellWidth / ratio
-        print("DEBUG: Cell Width is: \(cellWidth)")
-        return CGSize(width: cellWidth, height: cellHeight)
+        self.cellSize = CGSize(width: cellWidth, height: cellHeight)
+        return self.cellSize
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let cellWidth: CGFloat = 276 // need to get awake collectionView cell width
-        let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        let cellWidthIncludingSpacing = cellWidth + layout.minimumLineSpacing
-        let offset = targetContentOffset.pointee
-        let index = (offset.x) / (cellWidthIncludingSpacing)
-        let roundedIndex = round(index)
-        guard let _ = collectionView.cellForItem(at: .init(row: Int(roundedIndex), section: 0)) else { return }
-        let indexPath = IndexPath(row: Int(roundedIndex), section: 0)
-        self.collectionView.layoutIfNeeded()
-        self.collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
 
+        let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellWidthWithSpace: CGFloat = cellSize.width + layout.sectionInset.left
+   
+        let inertialTargetX = targetContentOffset.pointee.x
+        let offsetFromPreviousPage = (inertialTargetX + collectionView.contentInset.left).truncatingRemainder(dividingBy: cellWidthWithSpace)
+        
+        // move nearest cell
+        let pagedX: CGFloat
+        if offsetFromPreviousPage > cellWidthWithSpace / 2 {
+            pagedX = inertialTargetX + (cellWidthWithSpace - offsetFromPreviousPage)
+        } else {
+            pagedX = inertialTargetX - offsetFromPreviousPage
         }
+        
+        let point = CGPoint(x: pagedX, y: targetContentOffset.pointee.y)
+        targetContentOffset.pointee = point
     
+}
 }
