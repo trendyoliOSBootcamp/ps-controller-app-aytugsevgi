@@ -1,5 +1,3 @@
-import UIKit
-
 enum ServiceError: Error {
     case noDataAvailable
     case canNotProcessData

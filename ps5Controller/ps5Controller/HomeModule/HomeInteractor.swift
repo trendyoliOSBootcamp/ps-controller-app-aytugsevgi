@@ -1,5 +1,3 @@
-import UIKit
-
 protocol HomeInteractorInterface {
     func fetchProductList(type: HomeTabType)
 }
