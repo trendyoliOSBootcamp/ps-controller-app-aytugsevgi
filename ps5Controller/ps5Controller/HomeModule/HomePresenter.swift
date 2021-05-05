@@ -44,7 +44,7 @@ final class HomePresenter: HomePresenterInterface {
     func changeTab(type: HomeTabType) {
         guard type != selectedHomeTabType else { return }
         selectedHomeTabType = type
-        interactor?.fetchProductList(type: selectedHomeTabType)
+        interactor?.fetchProductList(type: type)
     }
     
     func insetForSections() -> (left: Double, right: Double, top: Double, bottom: Double) {
@@ -91,7 +91,6 @@ final class HomePresenter: HomePresenterInterface {
                   let image = product.image else { continue }
             let homeViewModel: HomeViewModel = (title, subtitle, image)
             homeViewModels.append(homeViewModel)
-            print(homeViewModel)
         }
         self.homeViewModels = homeViewModels
         

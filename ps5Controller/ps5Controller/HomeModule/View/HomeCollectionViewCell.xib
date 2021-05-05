@@ -53,6 +53,8 @@
             <size key="customSize" width="205" height="264"/>
             <connections>
                 <outlet property="cellButton" destination="NiC-zg-jiL" id="feK-dG-4vO"/>
+                <outlet property="subtitleLabel" destination="XFV-0N-BzG" id="2VM-oW-hv4"/>
+                <outlet property="titleLabel" destination="xyc-fQ-STL" id="MdB-4x-yIx"/>
             </connections>
             <point key="canvasLocation" x="326.08695652173918" y="189.17410714285714"/>
         </collectionViewCell>
