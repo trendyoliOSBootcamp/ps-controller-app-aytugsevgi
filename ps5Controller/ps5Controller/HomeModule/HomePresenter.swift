@@ -3,9 +3,9 @@ import Foundation
 protocol HomePresenterInterface {
     func notifyViewLoaded()
     func notifyViewDidAppear()
-    func changeTab()
-    func controllerListFetched(productList: [Product])
-    func controllerListFetchFailed(with errorMessage: String)
+    func changeTab(type: HomeTabType)
+    func productListFetched(productList: [Product])
+    func productListFetchFailed(with errorMessage: String)
 }
 
 typealias HomeViewModel = (title: String, subtitle: String, image: String)
@@ -13,29 +13,38 @@ typealias Rect = (origin: Point, size: Size)
 typealias Point = (x:Double, y:Double)
 typealias Size = (width: Double, height: Double)
 
+enum HomeTabType: Int {
+    case controller = 0
+    case switcher
+    case mouse
+}
+
 final class HomePresenter: HomePresenterInterface {
     var view: HomeViewController?
     var interactor: HomeInteractor?
     var router: HomeRouter?
-    var homeViewModels: [HomeViewModel]?
-    var cellRatio: Double = 231 / 291
-    var cellCountOnScreen: Double = 1 + 92/231
-    var cellSize = Size(width: 0, height: 0)
-    func getHomeViewModels() -> [HomeViewModel]? {
+    private var homeViewModels: [HomeViewModel]?
+    private var cellRatio: Double = 231 / 291
+    private var cellCountOnScreen: Double = 1 + 92/231
+    private var cellSize = Size(width: 0, height: 0)
+    private var selectedHomeTabType = HomeTabType.controller
+    func getHomeViewModels() -> [HomeViewModel]? {
         homeViewModels
     }
     
     func notifyViewLoaded() {
         view?.configureInitialView()
-        interactor?.fetchControllerList()
+        interactor?.fetchProductList(type: selectedHomeTabType)
     }
     
     func notifyViewDidAppear() {
         
     }
     
-    func changeTab() {
-        
+    func changeTab(type: HomeTabType) {
+        guard type != selectedHomeTabType else { return }
+        selectedHomeTabType = type
+        interactor?.fetchProductList(type: selectedHomeTabType)
     }
     
     func insetForSections() -> (left: Double, right: Double, top: Double, bottom: Double) {
@@ -47,7 +56,7 @@ final class HomePresenter: HomePresenterInterface {
         24
     }
     
-    func calculateCellSize(width: Double, originY: Double) -> (Rect, Size) {
+    func calculateCellSize(width: Double, originY: Double) -> (Rect, Size) {
         let spacing = insetForSections().left + minimumInteritemSpacingForSections()
         let widthWithoutSpacing = width - spacing
         let cellWidth = widthWithoutSpacing / cellCountOnScreen
@@ -74,7 +83,7 @@ final class HomePresenter: HomePresenterInterface {
         return point
     }
     
-    func controllerListFetched(productList: [Product]) {
+    func productListFetched(productList: [Product]) {
         var homeViewModels = [HomeViewModel]()
         for product in productList {
             guard let title = product.name,
@@ -82,13 +91,18 @@ final class HomePresenter: HomePresenterInterface {
                   let image = product.image else { continue }
             let homeViewModel: HomeViewModel = (title, subtitle, image)
             homeViewModels.append(homeViewModel)
+            print(homeViewModel)
         }
         self.homeViewModels = homeViewModels
-        view?.reloadData()
-        view?.animateWhenReloadData()
+        
+    
+        self.view?.reloadData()
+     
+        self.view?.animateWhenReloadData()
+        
     }
     
-    func controllerListFetchFailed(with errorMessage: String) {
+    func productListFetchFailed(with errorMessage: String) {
         router?.presentAlert("Error", errorMessage)
     }
 }

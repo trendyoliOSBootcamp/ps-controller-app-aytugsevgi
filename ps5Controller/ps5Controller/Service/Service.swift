@@ -7,12 +7,27 @@ enum ServiceError: Error {
 
 final class Service {
     
-    func fetchProductList(completion: @escaping(Result<[Product], ServiceError>) -> Void) {
+    func fetchProductList(type: HomeTabType, completion: @escaping(Result<[Product], ServiceError>) -> Void) {
         // some fetching process
-        let products: [Product] = [.init(name: "Dual Sense", description: "Official PS5 controller", image: "dualSenseBlack"),
-                                   .init(name: "Dual Sense", description: "Official PS5 controller", image: "dualSenseWhite"),
-                                   .init(name: "Dual Sense", description: "Official PS5 controller", image: "dualSenseBlack"),
-                                   .init(name: "Dual Sense", description: "Official PS5 controller", image: "dualSenseBlack")]
+        var products = [Product]()
+        switch type {
+        case .controller:
+            products = [.init(name: "Dual Sense", description: "Official PS5 controller", image: "dualSenseBlack"),
+                                      .init(name: "Dual Sense", description: "Official PS5 controller", image: "dualSenseWhite"),
+                                      .init(name: "Dual Sense", description: "Official PS5 controller", image: "dualSenseBlack"),
+                                      .init(name: "Dual Sense", description: "Official PS5 controller", image: "dualSenseBlack")]
+        case .switcher:
+            products = [.init(name: "Dual Switch", description: "Official PS5 switch", image: "dualSenseWhite"),
+                                      .init(name: "Dual Switch", description: "Official PS5 controller", image: "dualSenseWhite"),
+                                      .init(name: "Dual Switch", description: "Official PS5 switch", image: "dualSenseBlack"),
+                                      .init(name: "Dual Switch", description: "Official PS5 switch", image: "dualSenseBlack")]
+        case .mouse:
+            products = [.init(name: "Dual Mouse", description: "Official PS5 mouse", image: "dualSenseBlack"),
+                                      .init(name: "Dual Mouse", description: "Official PS5 mouse", image: "dualSenseBlack"),
+                                      .init(name: "Dual Mouse", description: "Official PS5 mouse", image: "dualSenseBlack"),
+                                      .init(name: "Dual Mouse", description: "Official PS5 mouse", image: "dualSenseBlack")]
+        }
+         
         completion(.success(products))
     }
 }

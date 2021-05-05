@@ -8,8 +8,7 @@ protocol HomeViewInterface {
 
 class HomeViewController: UIViewController {
     @IBOutlet weak private var collectionView: UICollectionView!
-    
-    var cellRatio: Double = 231 / 291
+    @IBOutlet var tabButtons: [UIButton]!
     var presenter: HomePresenter?
 
     override func viewDidLoad() {
@@ -21,6 +20,18 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         presenter?.notifyViewDidAppear()
     }
+ 
+
+    @IBAction func tabButtonsTapped(_ sender: UIButton) {
+        guard let index = tabButtons.firstIndex(of: sender),
+              let type = HomeTabType(rawValue: index) else { return }
+        tabButtons.forEach { $0.setBackgroundImage(UIImage(named: "unselectedHomeTab"), for: .normal)}
+        tabButtons.forEach { $0.tintColor = UIColor(named: "unselectedTabTintColor")}
+        tabButtons[index].setBackgroundImage(UIImage(named: "selectedHomeTab"), for: .normal)
+        tabButtons[index].tintColor = UIColor(named: "selectedTabTintColor")
+        presenter?.changeTab(type: type)
+    }
+    
 
 }
 
@@ -34,7 +45,10 @@ extension HomeViewController: HomeViewInterface {
     }
     
     func reloadData() {
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+        
     }
     
     func animateWhenReloadData() {

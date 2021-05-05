@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -14,20 +14,20 @@
             <objects>
                 <viewController storyboardIdentifier="HomeViewController" id="BYZ-38-t0r" customClass="HomeViewController" customModule="ps5Controller" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="E6f-eV-dRB">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Products" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ngi-cO-uZZ">
-                                <rect key="frame" x="24" y="91" width="296" height="49.5"/>
+                                <rect key="frame" x="24" y="135" width="390" height="49.5"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="41"/>
                                 <color key="textColor" name="primaryTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="bottom" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ILf-hc-H1V">
-                                <rect key="frame" x="0.0" y="316.5" width="320" height="221.5"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="bottom" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ILf-hc-H1V">
+                                <rect key="frame" x="0.0" y="482.5" width="414" height="349.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="24" minimumInteritemSpacing="0.0" id="DwV-GD-bqy">
                                     <size key="itemSize" width="128" height="128"/>
@@ -38,22 +38,31 @@
                                 <cells/>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pLg-b1-SFP">
-                                <rect key="frame" x="39.5" y="163.5" width="241" height="67"/>
+                                <rect key="frame" x="86.5" y="329.5" width="241" height="67"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9kY-o9-GAL">
                                         <rect key="frame" x="0.0" y="0.0" width="67" height="67"/>
                                         <color key="tintColor" name="selectedTabTintColor"/>
                                         <state key="normal" image="controller" backgroundImage="selectedHomeTab"/>
+                                        <connections>
+                                            <action selector="tabButtonsTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yvO-VE-IMO"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3k-kC-Kaz">
                                         <rect key="frame" x="87" y="0.0" width="67" height="67"/>
                                         <color key="tintColor" name="unselectedTabTintColor"/>
                                         <state key="normal" image="switch" backgroundImage="unselectedHomeTab"/>
+                                        <connections>
+                                            <action selector="tabButtonsTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oaX-cu-ILl"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zny-wb-vwf">
                                         <rect key="frame" x="174" y="0.0" width="67" height="67"/>
                                         <color key="tintColor" name="unselectedTabTintColor"/>
                                         <state key="normal" image="mouse" backgroundImage="unselectedHomeTab"/>
+                                        <connections>
+                                            <action selector="tabButtonsTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LeG-bj-6yd"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -61,7 +70,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yfk-jw-WOk">
-                                <rect key="frame" x="247" y="31" width="50" height="50"/>
+                                <rect key="frame" x="341" y="75" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="AX2-EU-IzI"/>
                                     <constraint firstAttribute="width" constant="50" id="V5g-G1-HhC"/>
@@ -93,6 +102,9 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="ILf-hc-H1V" id="dwW-ja-1CT"/>
+                        <outletCollection property="tabButtons" destination="9kY-o9-GAL" collectionClass="NSMutableArray" id="U28-wG-3a6"/>
+                        <outletCollection property="tabButtons" destination="v3k-kC-Kaz" collectionClass="NSMutableArray" id="63Z-Rx-o1B"/>
+                        <outletCollection property="tabButtons" destination="Zny-wb-vwf" collectionClass="NSMutableArray" id="LlG-ak-3Pf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

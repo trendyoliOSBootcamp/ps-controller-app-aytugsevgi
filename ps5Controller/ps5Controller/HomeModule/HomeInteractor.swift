@@ -1,20 +1,20 @@
 import UIKit
 
 protocol HomeInteractorInterface {
-    func fetchControllerList()
+    func fetchProductList(type: HomeTabType)
 }
 
 final class HomeInteractor: HomeInteractorInterface {
     var presenter: HomePresenter?
-    var service = Service()
+    private let service = Service()
     
-    func fetchControllerList() {
-        service.fetchProductList { [weak self] (result) in
+    func fetchProductList(type: HomeTabType) {
+        service.fetchProductList(type: type) { [weak self] (result) in
             switch result {
             case .success(let products):
-                self?.presenter?.controllerListFetched(productList: products)
+                self?.presenter?.productListFetched(productList: products)
             case .failure(let error):
-                self?.presenter?.controllerListFetchFailed(with: error.localizedDescription)
+                self?.presenter?.productListFetchFailed(with: error.localizedDescription)
             }
         }
     }
