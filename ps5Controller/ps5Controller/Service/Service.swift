@@ -6,7 +6,6 @@ enum ServiceError: Error {
 }
 
 final class Service {
-    
     func fetchProductList(type: HomeTabType, completion: @escaping(Result<[Product], ServiceError>) -> Void) {
         // some fetching process
         var products = [Product]()
@@ -27,7 +26,6 @@ final class Service {
                                       .init(name: "Dual Mouse", description: "Official PS5 mouse", image: "dualSenseBlack"),
                                       .init(name: "Dual Mouse", description: "Official PS5 mouse", image: "dualSenseBlack")]
         }
-         
         completion(.success(products))
     }
 }

@@ -13,7 +13,6 @@ final class HomeRouter {
         let interactor = HomeInteractor()
         let presenter = HomePresenter()
         let router = HomeRouter()
-        
         presenter.view = view
         presenter.interactor = interactor
         presenter.router = router
@@ -26,7 +25,6 @@ final class HomeRouter {
 }
 
 extension HomeRouter: HomeRouterInterface {
-
     func presentAlert(_ title: String, _ errorMessage: String) {
         let alertView = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default)

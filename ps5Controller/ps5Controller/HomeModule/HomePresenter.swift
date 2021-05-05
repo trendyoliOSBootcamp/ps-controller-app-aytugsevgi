@@ -72,7 +72,6 @@ final class HomePresenter: HomePresenterInterface {
         let cellWidthWithSpace: Double = cellSize.width + insetForSections().left
         let inertialTargetX = xPoint
         let offsetFromPreviousPage = (inertialTargetX + contentInsetLeft).truncatingRemainder(dividingBy: cellWidthWithSpace)
-        // move nearest cell
         let pagedX: Double
         if offsetFromPreviousPage > cellWidthWithSpace / 2 {
             pagedX = inertialTargetX + (cellWidthWithSpace - offsetFromPreviousPage)
@@ -93,12 +92,8 @@ final class HomePresenter: HomePresenterInterface {
             homeViewModels.append(homeViewModel)
         }
         self.homeViewModels = homeViewModels
-        
-    
         self.view?.reloadData()
-     
         self.view?.animateWhenReloadData()
-        
     }
     
     func productListFetchFailed(with errorMessage: String) {

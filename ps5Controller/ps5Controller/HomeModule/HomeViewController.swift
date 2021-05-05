@@ -6,7 +6,7 @@ protocol HomeViewInterface {
     func animateWhenReloadData()
 }
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet var tabButtons: [UIButton]!
     var presenter: HomePresenter?
@@ -20,8 +20,7 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         presenter?.notifyViewDidAppear()
     }
- 
-
+    
     @IBAction func tabButtonsTapped(_ sender: UIButton) {
         guard let index = tabButtons.firstIndex(of: sender),
               let type = HomeTabType(rawValue: index) else { return }
@@ -31,8 +30,6 @@ class HomeViewController: UIViewController {
         tabButtons[index].tintColor = UIColor(named: "selectedTabTintColor")
         presenter?.changeTab(type: type)
     }
-    
-
 }
 
 extension HomeViewController: HomeViewInterface {
@@ -48,7 +45,6 @@ extension HomeViewController: HomeViewInterface {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-        
     }
     
     func animateWhenReloadData() {
@@ -94,7 +90,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
         return CGSize(width: size.width, height: size.height)
     }
-    
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         guard let presenter = presenter else { return }
