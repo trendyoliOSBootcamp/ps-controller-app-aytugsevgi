@@ -1,10 +1,6 @@
 import UIKit
 
 final class HomeCollectionViewCell: UICollectionViewCell {
-    static let identifier = "HomeCollectionViewCell"
-    static func nib() -> UINib {
-        UINib(nibName: "HomeCollectionViewCell", bundle: nil)
-    }
     @IBOutlet weak private var cellButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!

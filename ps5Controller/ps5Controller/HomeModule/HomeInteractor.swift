@@ -3,16 +3,16 @@ protocol HomeInteractorInterface {
 }
 
 final class HomeInteractor: HomeInteractorInterface {
-    var presenter: HomePresenter?
+    var output: HomePresenterOutputInterface?
     private let service = Service()
     
     func fetchProductList(type: HomeTabType) {
-        service.fetchProductList(type: type) { [weak self] (result) in
+        service.fetchProductList(type: type) { [weak output] (result) in
             switch result {
             case .success(let products):
-                self?.presenter?.productListFetched(productList: products)
+                output?.productListFetched(productList: products)
             case .failure(let error):
-                self?.presenter?.productListFetchFailed(with: error.localizedDescription)
+                output?.productListFetchFailed(with: error.localizedDescription)
             }
         }
     }
