@@ -5,7 +5,7 @@ protocol HomeRouterInterface {
 }
 
 final class HomeRouter {
-    var navigationController: UINavigationController?
+    private var navigationController: UINavigationController?
     
     static func createModule(using navigationController: UINavigationController? = nil) -> UIViewController {
         let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "HomeViewController") as! HomeViewController

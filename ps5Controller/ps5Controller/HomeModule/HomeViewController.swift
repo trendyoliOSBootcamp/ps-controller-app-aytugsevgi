@@ -1,6 +1,6 @@
 import UIKit
 
-protocol HomeViewInterface {
+protocol HomeViewInterface: AnyObject {
     func configureInitialView()
     func reloadData()
     func animateWhenReloadData()
@@ -9,7 +9,7 @@ protocol HomeViewInterface {
 final class HomeViewController: UIViewController {
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet private var tabButtons: [UIButton]!
-    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak private var collectionViewHeight: NSLayoutConstraint!
     var presenter: HomePresenter!
 
     override func viewDidLoad() {
@@ -19,17 +19,16 @@ final class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-       
     }
     
-    @IBAction func tabButtonsTapped(_ sender: UIButton) {
+    @IBAction private func tabButtonsTapped(_ sender: UIButton) {
         guard let index = tabButtons.firstIndex(of: sender),
               let type = HomeTabType(rawValue: index) else { return }
         UIView.animate(withDuration: 1) {
-            self.tabButtons.forEach { $0.setBackgroundImage(UIImage(named: "unselectedHomeTab"), for: .normal)}
-            self.tabButtons.forEach { $0.tintColor = UIColor(named: "unselectedTabTintColor")}
-            self.tabButtons[index].setBackgroundImage(UIImage(named: "selectedHomeTab"), for: .normal)
-            self.tabButtons[index].tintColor = UIColor(named: "selectedTabTintColor")
+            self.tabButtons.forEach { $0.setBackgroundImage(UIImage(named: Constant.unselectedHomeTabBackgroundImage), for: .normal) }
+            self.tabButtons.forEach { $0.tintColor = UIColor(named: Constant.unselectedHomeTabTintColor) }
+            self.tabButtons[index].setBackgroundImage(UIImage(named: Constant.selectedHomeTabBackgroundImage), for: .normal)
+            self.tabButtons[index].tintColor = UIColor(named: Constant.selectedHomeTabTintColor)
         }
         presenter.didSelectTab(type: type)
     }
@@ -75,12 +74,11 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        CGFloat( presenter.minimumInteritemSpacingForSections() )
+        CGFloat( presenter.minimumInteritemSpacingForSections )
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate {
-}
+extension HomeViewController: UICollectionViewDelegate { }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

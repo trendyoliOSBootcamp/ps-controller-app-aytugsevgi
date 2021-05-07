@@ -16,16 +16,15 @@ typealias Size = (width: Double, height: Double)
 typealias Inset = (left: Double, right: Double, top: Double, bottom: Double)
 
 final class HomePresenter: HomePresenterInterface {
-    private weak var view: HomeViewController?
+    private weak var view: HomeViewInterface?
     private let interactor: HomeInteractorInterface
     private let router: HomeRouterInterface
     private var homeViewModels: [HomeViewModel]?
-    private var cellRatio: Double = 231 / 291
-    private var cellCountOnScreen: Double = 1 + 92/231
     private var cellSize = Size(width: 0, height: 0)
     private var selectedHomeTabType = HomeTabType.controller
     var insetForSections: Inset { Inset(left: 28.0, right: 28.0, top: 0.0, bottom: 0.0) }
     var numberOfItemsInSection: Int { homeViewModels?.count ?? 0 }
+    let minimumInteritemSpacingForSections: Double = 24
     
     init(view: HomeViewController, interactor: HomeInteractorInterface, router: HomeRouterInterface) {
         self.view = view
@@ -44,15 +43,11 @@ final class HomePresenter: HomePresenterInterface {
         interactor.fetchProductList(type: type)
     }
     
-    func minimumInteritemSpacingForSections() -> Double {
-        24
-    }
-    
     func calculateCellSize(width: Double, originY: Double) -> Size {
-        let spacing = insetForSections.left + minimumInteritemSpacingForSections()
+        let spacing = insetForSections.left + minimumInteritemSpacingForSections
         let widthWithoutSpacing = width - spacing
-        let cellWidth = widthWithoutSpacing / cellCountOnScreen
-        let cellHeight = cellWidth / cellRatio
+        let cellWidth = widthWithoutSpacing / Constant.homeCellCountOnScreen
+        let cellHeight = cellWidth / Constant.homeCellRatio
         cellSize = Size(width: cellWidth, height: cellHeight)
         return cellSize
     }
