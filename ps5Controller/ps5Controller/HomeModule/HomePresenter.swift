@@ -48,16 +48,13 @@ final class HomePresenter: HomePresenterInterface {
         24
     }
     
-    func calculateCellSize(width: Double, originY: Double) -> (Rect, Size) {
+    func calculateCellSize(width: Double, originY: Double) -> Size {
         let spacing = insetForSections.left + minimumInteritemSpacingForSections()
         let widthWithoutSpacing = width - spacing
         let cellWidth = widthWithoutSpacing / cellCountOnScreen
         let cellHeight = cellWidth / cellRatio
-        let collectionViewSize = Size(width: width, height: cellHeight)
-        let origin = (x: 50.0, y: (originY - 500.0))
-        let collectionViewFrame = Rect(origin: origin, size: collectionViewSize)
         cellSize = Size(width: cellWidth, height: cellHeight)
-        return (collectionViewFrame, cellSize)
+        return cellSize
     }
     
     func cellForItemAt(index: Int) -> HomeViewModel {

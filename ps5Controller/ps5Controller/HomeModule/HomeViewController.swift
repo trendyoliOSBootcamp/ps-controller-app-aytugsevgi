@@ -9,6 +9,7 @@ protocol HomeViewInterface {
 final class HomeViewController: UIViewController {
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet private var tabButtons: [UIButton]!
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     var presenter: HomePresenter!
 
     override func viewDidLoad() {
@@ -16,13 +17,20 @@ final class HomeViewController: UIViewController {
         presenter.viewDidLoad()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+       
+    }
+    
     @IBAction func tabButtonsTapped(_ sender: UIButton) {
         guard let index = tabButtons.firstIndex(of: sender),
               let type = HomeTabType(rawValue: index) else { return }
-        tabButtons.forEach { $0.setBackgroundImage(UIImage(named: "unselectedHomeTab"), for: .normal)}
-        tabButtons.forEach { $0.tintColor = UIColor(named: "unselectedTabTintColor")}
-        tabButtons[index].setBackgroundImage(UIImage(named: "selectedHomeTab"), for: .normal)
-        tabButtons[index].tintColor = UIColor(named: "selectedTabTintColor")
+        UIView.animate(withDuration: 1) {
+            self.tabButtons.forEach { $0.setBackgroundImage(UIImage(named: "unselectedHomeTab"), for: .normal)}
+            self.tabButtons.forEach { $0.tintColor = UIColor(named: "unselectedTabTintColor")}
+            self.tabButtons[index].setBackgroundImage(UIImage(named: "selectedHomeTab"), for: .normal)
+            self.tabButtons[index].tintColor = UIColor(named: "selectedTabTintColor")
+        }
         presenter.didSelectTab(type: type)
     }
 }
@@ -37,23 +45,21 @@ extension HomeViewController: HomeViewInterface {
     }
     
     func reloadData() {
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
+        self.collectionView.reloadData()
     }
     
     func animateWhenReloadData() {
-        collectionView.transform = CGAffineTransform(translationX: view.frame.width, y: 0)
-        collectionView.contentOffset = CGPoint(x: 0, y: 0)
+        collectionView.transform = CGAffineTransform(translationX: view.frame.width, y: 0).scaledBy(x: 0.6, y: 0.6)
+        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         UIView.animate(withDuration: 1) {
-            self.collectionView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.collectionView.transform = CGAffineTransform(translationX: 0, y: 0).scaledBy(x: 1, y: 1)
         }
     }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.numberOfItemsInSection
+        presenter.numberOfItemsInSection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -74,13 +80,12 @@ extension HomeViewController: UICollectionViewDataSource {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
-    
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let (frame, size) = presenter.calculateCellSize(width: Double(collectionView.frame.width), originY: Double(collectionView.frame.origin.y))
-        collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: frame.size.height)
+        let size = presenter.calculateCellSize(width: Double(collectionView.frame.width), originY: Double(collectionView.frame.origin.y))
+        collectionViewHeight.constant = CGFloat(size.height)
         return CGSize(width: size.width, height: size.height)
     }
     

@@ -26,9 +26,12 @@
                                 <color key="textColor" name="primaryTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="bottom" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ILf-hc-H1V">
-                                <rect key="frame" x="0.0" y="482.5" width="414" height="349.5"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="bottom" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ILf-hc-H1V">
+                                <rect key="frame" x="0.0" y="573" width="414" height="259"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="259" id="dvM-ka-mYf"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="24" minimumInteritemSpacing="0.0" id="DwV-GD-bqy">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -38,7 +41,7 @@
                                 <cells/>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pLg-b1-SFP">
-                                <rect key="frame" x="86.5" y="329.5" width="241" height="67"/>
+                                <rect key="frame" x="86.5" y="456" width="241" height="67"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9kY-o9-GAL">
                                         <rect key="frame" x="0.0" y="0.0" width="67" height="67"/>
@@ -85,23 +88,21 @@
                             <constraint firstItem="E6f-eV-dRB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7sn-5O-WgW"/>
                             <constraint firstItem="E6f-eV-dRB" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="AqO-5c-s7J"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ILf-hc-H1V" secondAttribute="bottom" constant="30" id="E2W-As-mTL"/>
-                            <constraint firstItem="9kY-o9-GAL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ngi-cO-uZZ" secondAttribute="bottom" id="JMR-BD-FVN"/>
                             <constraint firstAttribute="bottom" secondItem="E6f-eV-dRB" secondAttribute="bottom" id="KaZ-Hm-Icd"/>
-                            <constraint firstItem="pLg-b1-SFP" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" priority="999" id="Lm7-dj-rnW"/>
                             <constraint firstItem="Yfk-jw-WOk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="31" id="N2d-qc-vas"/>
                             <constraint firstItem="ILf-hc-H1V" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="NDi-ez-06a"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ILf-hc-H1V" secondAttribute="trailing" id="QdB-Ed-zoN"/>
                             <constraint firstItem="E6f-eV-dRB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="al4-Kc-HGq"/>
                             <constraint firstItem="Ngi-cO-uZZ" firstAttribute="leading" secondItem="E6f-eV-dRB" secondAttribute="leading" constant="24" id="dOH-Lm-KVb"/>
                             <constraint firstItem="Ngi-cO-uZZ" firstAttribute="trailing" secondItem="E6f-eV-dRB" secondAttribute="trailing" id="efT-2x-lmO"/>
-                            <constraint firstItem="ILf-hc-H1V" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.39" id="fzx-gX-Ni6"/>
                             <constraint firstItem="Ngi-cO-uZZ" firstAttribute="top" secondItem="Yfk-jw-WOk" secondAttribute="bottom" priority="999" constant="10" id="j0r-6S-dHH"/>
                             <constraint firstItem="pLg-b1-SFP" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="wvn-wA-jRd"/>
-                            <constraint firstItem="ILf-hc-H1V" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pLg-b1-SFP" secondAttribute="bottom" constant="86" id="zWS-41-agl"/>
+                            <constraint firstItem="ILf-hc-H1V" firstAttribute="top" secondItem="pLg-b1-SFP" secondAttribute="bottom" constant="50" id="zWS-41-agl"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="ILf-hc-H1V" id="dwW-ja-1CT"/>
+                        <outlet property="collectionViewHeight" destination="dvM-ka-mYf" id="GgQ-nh-Nuz"/>
                         <outletCollection property="tabButtons" destination="9kY-o9-GAL" collectionClass="NSMutableArray" id="U28-wG-3a6"/>
                         <outletCollection property="tabButtons" destination="v3k-kC-Kaz" collectionClass="NSMutableArray" id="63Z-Rx-o1B"/>
                         <outletCollection property="tabButtons" destination="Zny-wb-vwf" collectionClass="NSMutableArray" id="LlG-ak-3Pf"/>
