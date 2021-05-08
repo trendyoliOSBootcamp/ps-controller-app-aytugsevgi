@@ -1,8 +1,15 @@
 import Foundation
 
 protocol HomePresenterInterface {
+    var insetForSections: Inset { get }
+    var numberOfItemsInSection: Int { get }
+    var minimumInteritemSpacingForSections: Double { get }
+    
     func viewDidLoad()
-    func didSelectTab(type: HomeTabType)
+    func didSelectTab(index: Int?)
+    func calculateCellSize(width: Double, originY: Double) -> Size
+    func cellForItemAt(index: Int) -> HomeViewModel
+    func paging(xPoint: Double, yPoint: Double, contentInsetLeft: Double) -> Point
 }
 
 protocol HomePresenterOutputInterface: AnyObject {
@@ -37,9 +44,12 @@ final class HomePresenter: HomePresenterInterface {
         interactor.fetchProductList(type: selectedHomeTabType)
     }
     
-    func didSelectTab(type: HomeTabType) {
-        guard type != selectedHomeTabType else { return }
+    func didSelectTab(index: Int?) {
+        guard let index = index,
+              let type = HomeTabType(rawValue: index),
+              type != selectedHomeTabType else { return }
         selectedHomeTabType = type
+        view?.animateAndChangeTab(index: index)
         interactor.fetchProductList(type: type)
     }
     
@@ -76,7 +86,7 @@ extension HomePresenter: HomePresenterOutputInterface {
         let homeViewModels: [HomeViewModel] = productList.compactMap { HomeViewModel(title: $0.name, subtitle: $0.description, image: $0.image) }
         self.homeViewModels = homeViewModels
         view?.reloadData()
-        view?.animateWhenReloadData()
+        view?.animateCells()
     }
     
     func productListFetchFailed(with errorMessage: String) {
